@@ -1,4 +1,4 @@
-pacman::p_load(raster, rgdal, parallel, snow)
+pacman::p_load(raster, rgdal, parallel, snow, terra)
 
 indices <- function(list = ls, 
                      input = lsr, 
