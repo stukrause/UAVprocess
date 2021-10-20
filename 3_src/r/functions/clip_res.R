@@ -1,4 +1,4 @@
-pacman::p_load(raster, rgdal, parallel, snow, terra)
+pacman::p_load(raster, rgdal, parallel, snow, terra, tools)
 
 clip_res <- function(list, 
                      input,
@@ -48,11 +48,15 @@ clip_res <- function(list,
         names(re) <- c("blue", "green", "red", "nir", "rededge", "tir")
       }
       
-      writeRaster(re, paste0(output, "/", sens, "_", year, "_", doy, ".tif"),
+      bsn <- tools::file_path_sans_ext(basename(list[i]))
+      bsn
+      id <- substr(bsn, 1, 4)
+    
+      writeRaster(re, paste0(output, "/", id, "_", sens, "_", year, "_", doy, ".tif"),
                   names = names(re),
                   overwrite=TRUE)
       x <- paste0("Processed: ", i, " / ", length(list), "\nFilename: ", "'", output,
-                  "/", sens, "_", year, "_", doy, ".tif'\n")
+                  "/", id, "_", sens, "_", year, "_", doy, ".tif'\n")
       writeLines(x)
   }
 }
